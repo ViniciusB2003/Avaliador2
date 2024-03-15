@@ -177,6 +177,7 @@ const AwesomeProject = () => {
     </View>
   );
 };
+'teste'
 
 export default AwesomeProject;
 
