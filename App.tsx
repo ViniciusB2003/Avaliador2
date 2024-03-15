@@ -3,9 +3,9 @@
  * https://github.com/facebook/react-native
  *
  * @format
- */
+ 
 
-import React from 'react';
+import React, {useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -15,6 +15,8 @@ import {
   Text,
   useColorScheme,
   View,
+  TextInput,
+  Button,
 } from 'react-native';
 
 import {
@@ -55,12 +57,30 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   );
 }
 
+
+
+const AwesomeProject = () => {
+  const [num1, setNum1] = useState('');
+  const [num2, setNum2] = useState('');
+  const [randomNum, setRandomNum] = useState(0);
+
+
+
+  const generateRandomNum = () => {
+    const min = Math.ceil(Math.min(parseFloat(num1), parseFloat(num2)));
+    const max = Math.floor(Math.max(parseFloat(num1), parseFloat(num2)));
+    setRandomNum(Math.floor(Math.random() * (max - min + 1)) + min);
+  };
+
+
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -75,25 +95,29 @@ function App(): React.JSX.Element {
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          }}> 
+          <TextInput
+            placeholder='Digite o primeiro número'
+            value = {num1}
+            onChangeText={setNum1}
+            keyboardType='numeric'
+          />
+          <TextInput
+            placeholder='Digite o segundo número'
+            value={num2}
+            onChangeText={setNum2}
+            keyboardType='numeric'
+          />
+          <Button title='Gerar número aleatório'
+          onPress={generateRandomNum}/>
+          {randomNum && <Text>Número aleatório entre {num1} e {num2} é: {randomNum}</Text>}
+
         </View>
+    
       </ScrollView>
     </SafeAreaView>
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -115,4 +139,44 @@ const styles = StyleSheet.create({
   },
 });
 
+
+}
 export default App;
+*/
+
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
+
+const AwesomeProject = () => {
+  const [num1, setNum1] = useState('');
+  const [num2, setNum2] = useState('');
+  const [randomNum, setRandomNum] = useState(0);
+
+  const generateRandomNum = () => {
+    const min = Math.ceil(Math.min(parseInt(num1), parseInt(num2)));
+    const max = Math.floor(Math.max(parseInt(num1), parseInt(num2)));
+    setRandomNum(Math.floor(Math.random() * (max - min + 1)) + min);
+  };
+
+  return (
+    <View>
+      <TextInput
+        placeholder="Digite o primeiro número"
+        value={num1}
+        onChangeText={setNum1}
+        keyboardType="numeric"
+      />
+      <TextInput
+        placeholder="Digite o segundo número"
+        value={num2}
+        onChangeText={setNum2}
+        keyboardType="numeric"
+      />
+      <Button title="Gerar número aleatório" onPress={generateRandomNum} />
+      {randomNum !== 0 && <Text>Número aleatório entre {num1} e {num2} é: {randomNum}</Text>}
+    </View>
+  );
+};
+
+export default AwesomeProject;
+
